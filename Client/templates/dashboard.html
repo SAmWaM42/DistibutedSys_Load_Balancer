@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Load Balancer Dashboard</title>
+
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            margin:40px;
+            background:#f4f4f4;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .summary{
+            display:flex;
+            gap:20px;
+            margin-bottom:30px;
+        }
+
+        .card{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            flex:1;
+            text-align:center;
+            box-shadow:0px 0px 5px rgba(0,0,0,.15);
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+        }
+
+        th,td{
+            border:1px solid #ddd;
+            padding:10px;
+            text-align:center;
+        }
+
+        th{
+            background:#444;
+            color:white;
+        }
+
+        .active{
+            color:green;
+            font-weight:bold;
+        }
+
+        .removed{
+            color:red;
+            font-weight:bold;
+        }
+
+        .bar{
+            height:20px;
+            background:#4a90e2;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1>Load Balancer Dashboard</h1>
+
+<div class="summary">
+
+    <div class="card">
+        <h3>Total Servers</h3>
+        <h2>{{ stats|length }}</h2>
+    </div>
+
+    <div class="card">
+        <h3>Active Servers</h3>
+        <h2>
+            {{ stats.values()
+            |selectattr("status","equalto","active")
+            |list
+            |length }}
+        </h2>
+    </div>
+
+</div>
+
+<h2>Server Statistics</h2>
+
+<table>
+
+<tr>
+    <th>Server</th>
+    <th>Status</th>
+    <th>Requests</th>
+    <th>Load</th>
+</tr>
+
+{% set max_requests = stats.values()|map(attribute="requests")|max %}
+
+{% for server,data in stats.items() %}
+
+<tr>
+
+<td>{{server}}</td>
+
+<td class="{{data.status}}">
+{{data.status}}
+</td>
+
+<td>{{data.requests}}</td>
+
+<td style="width:300px">
+
+<div class="bar"
+style="width:{{(data.requests/max_requests)*100 }}%">
+</div>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>
