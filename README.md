@@ -2,10 +2,10 @@
 
 ## Participants
 
--**Gichuru Samuel Wamae  157660**
--**Tashobya Daniel Mutabazi 169494**
--**Omedi Alvin Eredi 168560**
--**Danni Podho 168333**
+- **Gichuru Samuel Wamae  157660**
+- **Tashobya Daniel Mutabazi 169494**
+- **Omedi Alvin Eredi 168560**
+- **Danni Podho 168333**
 
 
 
